@@ -123,16 +123,80 @@ But it is:
 
 ---
 
+JS:
+
 ```javascript
 function heyName(name) {
   return "Hey " + name;
 }
+
+log(heyName("jack"))
 ```
+
+Elm:
 
 ```
 heyName : String -> String
 heyName name =
   "Hey " ++ name
+
+log (heyName "jack")
+```
+
+---
+
+```
+-- we can use |> to tidy up calls
+-- <| also exists
+log (heyName "jack")
+
+"jack" |> heyName |> log
+
+-- there's also function composition with << and >>
+
+logHey = heyName << log
+
+logHey "jack"
+```
+
+---
+
+JS:
+
+```javascript
+var x = 2;
+doubleNumber(x);
+```
+
+Elm:
+
+```
+let
+  x = 2
+in
+  doubleNumber x
+
+```
+
+---
+
+## No concept of "truthyness"
+
+JS:
+
+```javascript
+function foo(x) {
+  return x ? 4 : 5;
+}
+```
+
+
+Elm (invalid!)
+
+```
+foo : Int -> Int
+foo x =
+  if x then 4 else 5
 ```
 
 ---
@@ -227,6 +291,18 @@ Records are immutable, but you can create new records from existing ones:
 ```
 newRecord =
   { myRecord | name = "Bob" }
+```
+
+---
+
+Just like with tuples, you can destructure records:
+
+```
+coordsFromRecord rec =
+  ( rec.x, rec.y )
+
+coordsFromRecord {x, y} =
+  (x, y)
 ```
 
 ---
@@ -354,6 +430,7 @@ Abstracts some of Elm's more complex behaviours away (we'll check them out later
 
 ---
 
+Building a counter.
 (Taken from Elm Architecture tutorial)
 
 ## The model
@@ -452,10 +529,6 @@ The `main` function renders some `Html` that changes over time (and is updated a
 
 ---
 
-![fit](https://github.com/evancz/elm-architecture-tutorial/raw/master/diagrams/signal-graph-summary.png)
-
----
-
 # Mailboxes
 
 ```
@@ -525,6 +598,11 @@ main =
 
 ---
 
+![fit](https://github.com/evancz/elm-architecture-tutorial/raw/master/diagrams/signal-graph-summary.png)
+
+---
+
+
 # Signal.foldp
 
 ---
@@ -541,9 +619,44 @@ Signal.foldp update initialModel actions.signal
 
 ---
 
+# No Nulls
+
+Elm doesn't allow null / nil / undefined.
+
+Instead it has `Maybe` - a value that _might_ exist, or might be `Nothing`.
+
+> Represent values that may or may not exist. It can be useful if you have a record field that is only filled in sometimes. Or if a function takes a value sometimes, but does not absolutely need it.
+-- http://package.elm-lang.org/packages/elm-lang/core/3.0.0/Maybe
+
+---
+
 # Tasks & Interopability with Ports
 
 https://blog.pusher.com/making-elm-lang-realtime-with-pusherjs/
+
+---
+
+# Games in Elm
+
+- (WIP) https://github.com/jackfranklin/elm-carcassonne
+- https://github.com/jackfranklin/elm-game-of-life
+- https://github.com/jackfranklin/elm-connect-four
+
+---
+
+# Elm Boilerplate
+
+https://github.com/jackfranklin/elm-boilerplate
+
+tests, live server and file watching
+
+---
+
+# Elm Statey
+
+A small state machine in Elm:
+
+https://github.com/jackfranklin/elm-statey
 
 ---
 
@@ -552,6 +665,25 @@ https://blog.pusher.com/making-elm-lang-realtime-with-pusherjs/
 - elm docs: http://elm-lang.org/docs
 - Elm weekly: http://www.elmweekly.nl/
 
+---
+
+# Exercises
+
+- Elm Koans: https://github.com/robertjlooby/elm-koans
+- Elm Architecture Tutorial: https://github.com/evancz/elm-architecture-tutorial/
+- Elm Trees: https://github.com/jackfranklin/elm-hack-night-trees
+
+---
+
+Thanks!
+
+javascriptplayground.com
+@Jack_Franklin
+jack@pusher.com
+
+---
+
+TODO: maybe and dealing with null
 
 
 
